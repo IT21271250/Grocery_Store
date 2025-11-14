@@ -1,19 +1,20 @@
+from sql_connection import get_sql_connection
 import mysql.connector
 
-query="select products.Product_id, products.name, products.uom_id, products.price_per_unit, uom.uom_name from products inner join uom on products.uom_id=uom.uom_id;"
 
-def get_all_products():
+def get_all_products(connection):
      
+    query="select products.Product_id, products.name, products.uom_id, products.price_per_unit, uom.uom_name from products inner join uom on products.uom_id=uom.uom_id;"
+    
     #insert data to db
-    """query1="INSERT INTO grocery_store.products (Product_id, name, uom_id, price_per_unit) VALUES (%s, %s, %s, %s)"
-    values = (3, "banana", 2, 40)""" 
+    #query1="INSERT INTO grocery_store.products (Product_id, name, uom_id, price_per_unit) VALUES (%s, %s, %s, %s)"
+    #values = (3, "banana", 2, 40) 
 
     try:
-        connection = mysql.connector.connect(host='localhost', database='grocery_store', user='root',password='root')
         cursor = connection.cursor()
-        """cursor.execute(query1,values)""" #insert data to db
+        #cursor.execute(query1,values) #insert data to db
         cursor.execute(query)
-        """connection.commit()""" #for insert to db
+        #connection.commit() #for insert to db
 
         # Fetch results
         """results = cursor.fetchall()
@@ -45,4 +46,5 @@ def get_all_products():
             return response
 
 if __name__=='__main__':
-        print(get_all_products())
+        connection = get_sql_connection()
+        print(get_all_products(connection))
