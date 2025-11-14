@@ -1,20 +1,14 @@
 from sql_connection import get_sql_connection
 import mysql.connector
 
-
+#Read all products
 def get_all_products(connection):
      
     query="select products.Product_id, products.name, products.uom_id, products.price_per_unit, uom.uom_name from products inner join uom on products.uom_id=uom.uom_id;"
-    
-    #insert data to db
-    #query1="INSERT INTO grocery_store.products (Product_id, name, uom_id, price_per_unit) VALUES (%s, %s, %s, %s)"
-    #values = (3, "banana", 2, 40) 
 
     try:
         cursor = connection.cursor()
-        #cursor.execute(query1,values) #insert data to db
         cursor.execute(query)
-        #connection.commit() #for insert to db
 
         # Fetch results
         """results = cursor.fetchall()
@@ -36,7 +30,7 @@ def get_all_products(connection):
             )
             
     except mysql.connector.Error as err:
-        print('Error :',err)
+        print('Error from get :',err)
 
     finally:
         if connection.is_connected():
@@ -45,6 +39,38 @@ def get_all_products(connection):
             print("MySQL connection closed.")
             return response
 
+#insert new products
+def insert_new_product(connection, product):
+     
+    #insert data to db
+    query="INSERT INTO products (name, uom_id, price_per_unit) VALUES ( %s, %s, %s)"
+    values = (product['product_name'], product['uom_id'], product['price_per_unit']) 
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute(query, values) #insert data to db
+        connection.commit() #for insert to db
+
+        return cursor.lastrowid #get the last row id
+
+    except mysql.connector.Error as err:
+        print('Error from insert :',err)
+
+
+#Delete new products
+def delete_product(connection, product_id):
+     
+    #insert data to db
+    query= ("DELETE FROM products where product_id=" + str(product_id))
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute(query)
+        connection.commit()
+
+    except mysql.connector.Error as err:
+        print('Error from Delete :',err)
+
 if __name__=='__main__':
         connection = get_sql_connection()
-        print(get_all_products(connection))
+        print(delete_product(connection,12))
