@@ -6,6 +6,8 @@ def get_all_products(connection):
      
     query="select products.Product_id, products.name, products.uom_id, products.price_per_unit, uom.uom_name from products inner join uom on products.uom_id=uom.uom_id;"
 
+    response = []
+
     try:
         cursor = connection.cursor()
         cursor.execute(query)
@@ -15,8 +17,6 @@ def get_all_products(connection):
 
         for row in results:
             print(row)"""
-        
-        response = []
         
         for (Product_id,name,uom_id,price_per_unit, uom_name) in cursor:
             response.append(
@@ -30,7 +30,7 @@ def get_all_products(connection):
             )
             
     except mysql.connector.Error as err:
-        print('Error from get :',err)
+        print('Error from get : ',err)
 
     finally:
         if connection.is_connected():
@@ -43,8 +43,9 @@ def get_all_products(connection):
 def insert_new_product(connection, product):
      
     #insert data to db
-    query="INSERT INTO products (name, uom_id, price_per_unit) VALUES ( %s, %s, %s)"
+    query="INSERT INTO products (name, uom_id, price_per_unit) VALUES (%s, %s, %s)"
     values = (product['product_name'], product['uom_id'], product['price_per_unit']) 
+    #values = ('Towel','1','1000')
 
     try:
         cursor = connection.cursor()
@@ -61,7 +62,7 @@ def insert_new_product(connection, product):
 def delete_product(connection, product_id):
      
     #insert data to db
-    query= ("DELETE FROM products where product_id=" + str(product_id))
+    query= ("DELETE FROM products where product_id = " + str(product_id))
 
     try:
         cursor = connection.cursor()
@@ -73,4 +74,6 @@ def delete_product(connection, product_id):
 
 if __name__=='__main__':
         connection = get_sql_connection()
-        print(delete_product(connection,12))
+        print(get_all_products(connection))
+        #print(delete_product(connection,11))
+        #print(insert_new_product(connection))
