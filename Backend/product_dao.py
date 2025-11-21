@@ -89,6 +89,6 @@ def delete_product(connection, product_id):
 
 if __name__=='__main__':
         connection = get_sql_connection()
-        print(get_all_products(connection))
+        #print(get_all_products(connection))
         #print(delete_product(connection,11))
         #print(insert_new_product(connection))

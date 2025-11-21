@@ -1,16 +1,24 @@
 var productModal = $("#productModal");
     $(function () {
 
+        function capitalizeWords(str) {
+            return str.replace(/\b\w/g, function(char) {
+                return char.toUpperCase();
+            });
+        }
+
         //JSON data by API call
         $.get(productListApiUrl, function (response) {
             console.log("Products:", response);
             if(response) {
                 var table = '';
                 $.each(response, function(index, product) {
-                    table += '<tr data-id="'+ product.product_id +'" data-name="'+ product.name +'" data-unit="'+ product.uom_id +'" data-price="'+ product.price_per_unit +'">' +
-                        '<td>'+ product.name +'</td>'+
+                    var name = capitalizeWords(product.name);
+
+                    table += '<tr data-id="'+ product.product_id +'" data-name="'+ name +'" data-unit="'+ product.uom_id +'" data-price="'+ product.price_per_unit +'">' +
+                        '<td>'+ name +'</td>'+
                         '<td>'+ product.uom_name +'</td>'+
-                        '<td>'+ product.price_per_unit +'</td>'+
+                        '<td>'+ 'Rs. '+product.price_per_unit +'</td>'+
                         '<td><span class="btn btn-xs btn-danger delete-product">Delete</span></td></tr>';
                 });
                 $("table").find('tbody').empty().html(table);
