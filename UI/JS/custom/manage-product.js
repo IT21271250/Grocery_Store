@@ -3,6 +3,7 @@ var productModal = $("#productModal");
 
         //JSON data by API call
         $.get(productListApiUrl, function (response) {
+            console.log("Products:", response);
             if(response) {
                 var table = '';
                 $.each(response, function(index, product) {
