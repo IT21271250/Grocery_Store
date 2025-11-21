@@ -30,14 +30,10 @@ def get_order_detail(connection):
 
     finally:
         if connection.is_connected():
-            cursor.close()
-            connection.close()
-            print("MySQL connection closed.")
             return result
 
 if __name__=='__main__':
         connection = get_sql_connection()
-        print(get_order_detail(connection))
         
 
 
