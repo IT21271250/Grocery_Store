@@ -16,12 +16,12 @@ def get_products():
     response.headers.add("Access-Control-Allow-Origin", '*')
     return response
     
-@app.route("/deleteProduct", methods=['POST'])
+'''@app.route("/deleteProduct", methods=['POST'])
 def delete_products():
     return_id = product_dao.delete_products(connection, request.form[product_id])
     response = jsonify({'product_id' : return_id})
     response.headers.add("Access-Control-Allow-Origin", '*')
-    return response
+    return response'''
 
 @app.route("/getAllOrders", methods=['GET'])
 def get_orders():
