@@ -76,7 +76,6 @@ def insert_new_product(connection, product):
 #Delete new products
 def delete_product(connection, product_id):
      
-    #insert data to db
     query= ("DELETE FROM products where product_id = " + str(product_id))
 
     try:

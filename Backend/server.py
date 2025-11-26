@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import product_dao
 import orders
 from sql_connection import get_sql_connection
@@ -18,7 +18,7 @@ def get_products():
     
 @app.route("/deleteProduct", methods=['POST'])
 def delete_products():
-    return_id = product_dao.delete_products(connection, request.form[product_id])
+    return_id = product_dao.delete_product(connection,request.form['product_id'])
     response = jsonify({'product_id' : return_id})
     response.headers.add("Access-Control-Allow-Origin", '*')
     return response
